@@ -32,7 +32,7 @@ Aplicación web para crear currículums profesionales e impresionantes con difer
 
 1. Clona este repositorio:
    ```bash
-   git clone https://github.com/tu-usuario/generador-cv.git
+   git clone https://github.com/sandrodevx/generador-cv.git
    cd generador-cv
    ```
 
