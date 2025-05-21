@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faPhone, faMapMarkerAlt, faGlobe, faLink } from '@fortawesome/free-solid-svg-icons'
 
-const ExecutiveTemplate = ({ resumeData }) => {
+const ExecutiveTemplate = ({ resumeData, colorTheme = { primary: '#1c1c1c', secondary: '#333333', accent: '#666666' } }) => {
   const { 
     personalInfo, 
     professionalSummary, 
@@ -13,33 +13,57 @@ const ExecutiveTemplate = ({ resumeData }) => {
   } = resumeData
 
   return (
-    <div className="executive-resume" style={{ fontFamily: '"Times New Roman", Times, serif', color: '#333' }}>
+    <div className="executive-resume" style={{ fontFamily: '"Times New Roman", Times, serif', color: colorTheme.secondary }}>
       {/* Header with dark background */}
       <header style={{ 
-        backgroundColor: '#1c1c1c', 
+        backgroundColor: colorTheme.primary, 
         color: 'white', 
         padding: '2rem',
         marginBottom: '1rem'
       }}>
         <div style={{ maxWidth: '900px', margin: '0 auto', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <div>
-            <h1 style={{ 
-              fontSize: '2.5rem', 
-              fontWeight: '400', 
-              textTransform: 'uppercase', 
-              letterSpacing: '2px', 
-              marginBottom: '0.25rem'
-            }}>
-              {personalInfo.fullName || 'Tu Nombre'}
-            </h1>
-            <p style={{ 
-              fontSize: '1.1rem', 
-              fontWeight: '300', 
-              letterSpacing: '1px',
-              margin: 0
-            }}>
-              {personalInfo.title || 'Tu Título Profesional'}
-            </p>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '2rem' }}>
+            {/* Profile Image */}
+            {personalInfo.profileImage && (
+              <div style={{
+                width: '120px',
+                height: '120px',
+                borderRadius: '50%',
+                overflow: 'hidden',
+                border: '3px solid white',
+                flexShrink: 0
+              }}>
+                <img 
+                  src={personalInfo.profileImage} 
+                  alt={personalInfo.fullName}
+                  style={{
+                    width: '100%',
+                    height: '100%',
+                    objectFit: 'cover'
+                  }}
+                />
+              </div>
+            )}
+            
+            <div>
+              <h1 style={{ 
+                fontSize: '2.5rem', 
+                fontWeight: '400', 
+                textTransform: 'uppercase', 
+                letterSpacing: '2px', 
+                marginBottom: '0.25rem'
+              }}>
+                {personalInfo.fullName || 'Tu Nombre'}
+              </h1>
+              <p style={{ 
+                fontSize: '1.1rem', 
+                fontWeight: '300', 
+                letterSpacing: '1px',
+                margin: 0
+              }}>
+                {personalInfo.title || 'Tu Título Profesional'}
+              </p>
+            </div>
           </div>
           <div style={{ textAlign: 'right' }}>
             {personalInfo.email && (
@@ -70,17 +94,17 @@ const ExecutiveTemplate = ({ resumeData }) => {
         {professionalSummary && (
           <section style={{ 
             marginBottom: '2rem',
-            borderBottom: '1px solid #ccc',
+            borderBottom: `1px solid ${colorTheme.accent}`,
             paddingBottom: '1.5rem'
           }}>
             <h2 style={{ 
               fontSize: '1.3rem', 
               textTransform: 'uppercase', 
               letterSpacing: '2px', 
-              color: '#1c1c1c',
+              color: colorTheme.primary,
               marginBottom: '1rem',
               fontWeight: '400',
-              borderLeft: '4px solid #1c1c1c',
+              borderLeft: `4px solid ${colorTheme.primary}`,
               paddingLeft: '0.75rem'
             }}>
               Perfil Ejecutivo
@@ -100,17 +124,17 @@ const ExecutiveTemplate = ({ resumeData }) => {
         {workExperience.length > 0 && (
           <section style={{ 
             marginBottom: '2rem',
-            borderBottom: '1px solid #ccc',
+            borderBottom: `1px solid ${colorTheme.accent}`,
             paddingBottom: '1.5rem'
           }}>
             <h2 style={{ 
               fontSize: '1.3rem', 
               textTransform: 'uppercase', 
               letterSpacing: '2px', 
-              color: '#1c1c1c',
+              color: colorTheme.primary,
               marginBottom: '1.5rem',
               fontWeight: '400',
-              borderLeft: '4px solid #1c1c1c',
+              borderLeft: `4px solid ${colorTheme.primary}`,
               paddingLeft: '0.75rem'
             }}>
               Trayectoria Profesional
@@ -124,7 +148,7 @@ const ExecutiveTemplate = ({ resumeData }) => {
                       fontSize: '1.1rem', 
                       fontWeight: '600', 
                       marginBottom: '0.25rem', 
-                      color: '#1c1c1c'
+                      color: colorTheme.primary
                     }}>
                       {exp.company}
                     </h3>
@@ -141,7 +165,7 @@ const ExecutiveTemplate = ({ resumeData }) => {
                     flex: 1, 
                     textAlign: 'right', 
                     fontSize: '0.9rem', 
-                    color: '#666',
+                    color: colorTheme.accent,
                     fontWeight: '400'
                   }}>
                     {exp.startDate} - {exp.endDate}
@@ -150,10 +174,10 @@ const ExecutiveTemplate = ({ resumeData }) => {
                 <p style={{ 
                   fontSize: '0.95rem', 
                   lineHeight: '1.6', 
-                  color: '#444',
+                  color: colorTheme.accent,
                   margin: 0,
                   paddingLeft: '1rem',
-                  borderLeft: '1px solid #ddd'
+                  borderLeft: `1px solid ${colorTheme.accent}`
                 }}>
                   {exp.description}
                 </p>
@@ -166,17 +190,17 @@ const ExecutiveTemplate = ({ resumeData }) => {
         {education.length > 0 && (
           <section style={{ 
             marginBottom: '2rem',
-            borderBottom: '1px solid #ccc',
+            borderBottom: `1px solid ${colorTheme.accent}`,
             paddingBottom: '1.5rem'
           }}>
             <h2 style={{ 
               fontSize: '1.3rem', 
               textTransform: 'uppercase', 
               letterSpacing: '2px', 
-              color: '#1c1c1c',
+              color: colorTheme.primary,
               marginBottom: '1.5rem',
               fontWeight: '400',
-              borderLeft: '4px solid #1c1c1c',
+              borderLeft: `4px solid ${colorTheme.primary}`,
               paddingLeft: '0.75rem'
             }}>
               Formación Académica
@@ -191,7 +215,7 @@ const ExecutiveTemplate = ({ resumeData }) => {
                         fontSize: '1.1rem', 
                         fontWeight: '600', 
                         marginBottom: '0.25rem', 
-                        color: '#1c1c1c'
+                        color: colorTheme.primary
                       }}>
                         {edu.institution}
                       </h3>
@@ -208,7 +232,7 @@ const ExecutiveTemplate = ({ resumeData }) => {
                       flex: 1, 
                       textAlign: 'right', 
                       fontSize: '0.9rem', 
-                      color: '#666',
+                      color: colorTheme.accent,
                       fontWeight: '400'
                     }}>
                       {edu.startDate} - {edu.endDate}
@@ -217,7 +241,7 @@ const ExecutiveTemplate = ({ resumeData }) => {
                   {edu.description && (
                     <p style={{ 
                       fontSize: '0.95rem', 
-                      color: '#444',
+                      color: colorTheme.accent,
                       margin: '0.5rem 0 0 0'
                     }}>
                       {edu.description}
@@ -240,10 +264,10 @@ const ExecutiveTemplate = ({ resumeData }) => {
                   fontSize: '1.3rem', 
                   textTransform: 'uppercase', 
                   letterSpacing: '2px', 
-                  color: '#1c1c1c',
+                  color: colorTheme.primary,
                   marginBottom: '1rem',
                   fontWeight: '400',
-                  borderLeft: '4px solid #1c1c1c',
+                  borderLeft: `4px solid ${colorTheme.primary}`,
                   paddingLeft: '0.75rem'
                 }}>
                   Competencias Profesionales
@@ -261,11 +285,11 @@ const ExecutiveTemplate = ({ resumeData }) => {
                       borderRadius: '2px',
                       fontSize: '0.9rem',
                       backgroundColor: '#f5f5f5',
-                      border: '1px solid #ddd',
+                      border: `1px solid ${colorTheme.accent}`,
                       display: 'inline-block'
                     }}>
                       {skill.name}
-                      {skill.level && <span style={{ color: '#777', fontSize: '0.8rem' }}> ({skill.level})</span>}
+                      {skill.level && <span style={{ color: colorTheme.accent, fontSize: '0.8rem' }}> ({skill.level})</span>}
                     </div>
                   ))}
                 </div>
@@ -278,10 +302,10 @@ const ExecutiveTemplate = ({ resumeData }) => {
                 fontSize: '1.3rem', 
                 textTransform: 'uppercase', 
                 letterSpacing: '2px', 
-                color: '#1c1c1c',
+                color: colorTheme.primary,
                 marginBottom: '1rem',
                 fontWeight: '400',
-                borderLeft: '4px solid #1c1c1c',
+                borderLeft: `4px solid ${colorTheme.primary}`,
                 paddingLeft: '0.75rem'
               }}>
                 Contacto Profesional
@@ -294,15 +318,15 @@ const ExecutiveTemplate = ({ resumeData }) => {
               }}>
                 {personalInfo.linkedIn && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <FontAwesomeIcon icon={faLink} style={{ marginRight: '0.5rem', color: '#1c1c1c' }} />
-                    <span style={{ color: '#333' }}>{personalInfo.linkedIn}</span>
+                    <FontAwesomeIcon icon={faLink} style={{ marginRight: '0.5rem', color: colorTheme.primary }} />
+                    <span style={{ color: colorTheme.accent }}>{personalInfo.linkedIn}</span>
                   </div>
                 )}
                 
                 {personalInfo.portfolio && (
                   <div style={{ display: 'flex', alignItems: 'center' }}>
-                    <FontAwesomeIcon icon={faGlobe} style={{ marginRight: '0.5rem', color: '#1c1c1c' }} />
-                    <span style={{ color: '#333' }}>{personalInfo.portfolio}</span>
+                    <FontAwesomeIcon icon={faGlobe} style={{ marginRight: '0.5rem', color: colorTheme.primary }} />
+                    <span style={{ color: colorTheme.accent }}>{personalInfo.portfolio}</span>
                   </div>
                 )}
               </div>
@@ -318,10 +342,10 @@ const ExecutiveTemplate = ({ resumeData }) => {
                   fontSize: '1.3rem', 
                   textTransform: 'uppercase', 
                   letterSpacing: '2px', 
-                  color: '#1c1c1c',
+                  color: colorTheme.primary,
                   marginBottom: '1rem',
                   fontWeight: '400',
-                  borderLeft: '4px solid #1c1c1c',
+                  borderLeft: `4px solid ${colorTheme.primary}`,
                   paddingLeft: '0.75rem'
                 }}>
                   Idiomas
@@ -333,11 +357,11 @@ const ExecutiveTemplate = ({ resumeData }) => {
                       marginBottom: '0.75rem',
                       display: 'flex',
                       justifyContent: 'space-between',
-                      borderBottom: index < languages.length - 1 ? '1px dotted #ddd' : 'none',
+                      borderBottom: index < languages.length - 1 ? `1px dotted ${colorTheme.accent}` : 'none',
                       paddingBottom: index < languages.length - 1 ? '0.5rem' : 0
                     }}>
                       <span style={{ fontWeight: '500' }}>{lang.name}</span>
-                      <span style={{ color: '#666' }}>{lang.level}</span>
+                      <span style={{ color: colorTheme.accent }}>{lang.level}</span>
                     </div>
                   ))}
                 </div>
@@ -351,10 +375,10 @@ const ExecutiveTemplate = ({ resumeData }) => {
                   fontSize: '1.3rem', 
                   textTransform: 'uppercase', 
                   letterSpacing: '2px', 
-                  color: '#1c1c1c',
+                  color: colorTheme.primary,
                   marginBottom: '1rem',
                   fontWeight: '400',
-                  borderLeft: '4px solid #1c1c1c',
+                  borderLeft: `4px solid ${colorTheme.primary}`,
                   paddingLeft: '0.75rem'
                 }}>
                   Certificaciones
@@ -365,10 +389,10 @@ const ExecutiveTemplate = ({ resumeData }) => {
                     <div key={index} style={{ marginBottom: index < certifications.length - 1 ? '1rem' : 0 }}>
                       <p style={{ margin: 0, fontWeight: '600', fontSize: '1rem' }}>
                         {cert.name}
-                        {cert.year && <span style={{ fontWeight: 'normal', color: '#666', fontSize: '0.9rem' }}> ({cert.year})</span>}
+                        {cert.year && <span style={{ fontWeight: 'normal', color: colorTheme.accent, fontSize: '0.9rem' }}> ({cert.year})</span>}
                       </p>
                       {cert.organization && (
-                        <p style={{ margin: 0, fontSize: '0.9rem', color: '#666' }}>
+                        <p style={{ margin: 0, fontSize: '0.9rem', color: colorTheme.accent }}>
                           {cert.organization}
                         </p>
                       )}

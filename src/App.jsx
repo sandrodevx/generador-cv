@@ -2,9 +2,10 @@ import { useState, useRef, useEffect } from 'react'
 import { Container, Row, Col, Button, Card } from 'react-bootstrap'
 import { useReactToPrint } from 'react-to-print'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faFileDownload, faEye, faArrowLeft, faPrint, faFilePdf } from '@fortawesome/free-solid-svg-icons'
+import { faFileDownload, faEye, faArrowLeft, faPrint, faFilePdf, faMoon, faSun } from '@fortawesome/free-solid-svg-icons'
 import html2canvas from 'html2canvas'
 import { jsPDF } from 'jspdf'
+import { ThemeProvider, useTheme } from './theme/ThemeContext'
 import ResumeForm from './components/form/ResumeForm'
 import ResumePreview from './components/cv-templates/ResumePreview'
 import './App.css'
@@ -14,7 +15,8 @@ const APP_NAME = import.meta.env.VITE_APP_NAME || 'Generador de Currículum'
 const PDF_QUALITY = parseInt(import.meta.env.VITE_PDF_QUALITY || '2')
 const MAX_UPLOAD_SIZE = parseInt(import.meta.env.VITE_MAX_UPLOAD_SIZE || '1048576')
 
-function App() {
+function AppContent() {
+  const { isDarkMode, toggleTheme } = useTheme()
   const [resumeData, setResumeData] = useState({
     personalInfo: { 
       fullName: '', 
@@ -101,8 +103,17 @@ function App() {
   const switchToForm = () => setView('form')
 
   return (
-    <Container fluid className="app-container">
+    <Container fluid className={`app-container ${isDarkMode ? 'dark-mode' : ''}`}>
       <header className="app-header py-4 bg-primary text-white text-center mb-5">
+        <div className="d-flex justify-content-end px-4 position-absolute" style={{ right: 0, top: '1rem' }}>
+          <Button
+            variant={isDarkMode ? 'light' : 'dark'}
+            className="rounded-circle p-2"
+            onClick={toggleTheme}
+          >
+            <FontAwesomeIcon icon={isDarkMode ? faSun : faMoon} />
+          </Button>
+        </div>
         <h1>{APP_NAME}</h1>
         <p className="lead mb-0">Crea un currículum impresionante en minutos</p>
       </header>
@@ -165,6 +176,14 @@ function App() {
         <p>© {new Date().getFullYear()} {APP_NAME} - Crea tu CV profesional</p>
       </footer>
     </Container>
+  )
+}
+
+function App() {
+  return (
+    <ThemeProvider>
+      <AppContent />
+    </ThemeProvider>
   )
 }
 

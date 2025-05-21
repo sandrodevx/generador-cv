@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEnvelope, faPhone, faMapMarkerAlt, faGlobe, faLink, faStar } from '@fortawesome/free-solid-svg-icons'
 
-const CreativeTemplate = ({ resumeData }) => {
+const CreativeTemplate = ({ resumeData, colorTheme = { primary: '#4cc9f0', secondary: '#4361ee', accent: '#3a0ca3' } }) => {
   const { 
     personalInfo, 
     professionalSummary, 
@@ -38,7 +38,7 @@ const CreativeTemplate = ({ resumeData }) => {
         key={index} 
         icon={faStar} 
         style={{ 
-          color: index < value ? '#f72585' : '#e9ecef',
+          color: index < value ? colorTheme.accent : '#e9ecef',
           fontSize: '0.8rem',
           marginRight: '3px'
         }} 
@@ -50,78 +50,109 @@ const CreativeTemplate = ({ resumeData }) => {
     <div className="creative-resume" style={{ fontFamily: '"Montserrat", sans-serif', background: 'linear-gradient(to bottom right, #ffffff, #f8f9fa)' }}>
       {/* Header with colored background */}
       <header style={{ 
-        background: 'linear-gradient(135deg, #4cc9f0, #4361ee, #3a0ca3)',
+        background: `linear-gradient(135deg, ${colorTheme.primary}, ${colorTheme.secondary}, ${colorTheme.accent})`,
         color: 'white',
         padding: '2rem',
         borderRadius: '10px',
         marginBottom: '2rem',
         position: 'relative',
-        overflow: 'hidden'
+        overflow: 'hidden',
+        display: 'flex',
+        alignItems: 'flex-start',
+        gap: '2rem'
       }}>
-        {/* Círculos decorativos */}
-        <div style={{ 
-          position: 'absolute', 
-          width: '150px', 
-          height: '150px', 
-          borderRadius: '50%', 
-          background: 'rgba(255,255,255,0.1)', 
-          top: '-50px', 
-          right: '-50px'
-        }}></div>
-        <div style={{ 
-          position: 'absolute', 
-          width: '100px', 
-          height: '100px', 
-          borderRadius: '50%', 
-          background: 'rgba(255,255,255,0.1)', 
-          bottom: '-30px', 
-          left: '10%'
-        }}></div>
+        {/* Profile Image */}
+        {personalInfo.profileImage && (
+          <div style={{
+            width: '150px',
+            height: '150px',
+            borderRadius: '50%',
+            overflow: 'hidden',
+            border: '4px solid rgba(255,255,255,0.2)',
+            flexShrink: 0,
+            position: 'relative',
+            zIndex: 2
+          }}>
+            <img 
+              src={personalInfo.profileImage} 
+              alt={personalInfo.fullName}
+              style={{
+                width: '100%',
+                height: '100%',
+                objectFit: 'cover'
+              }}
+            />
+          </div>
+        )}
+
+        <div style={{ flex: 1 }}>
+          {/* Círculos decorativos */}
+          <div style={{ 
+            position: 'absolute', 
+            width: '150px', 
+            height: '150px', 
+            borderRadius: '50%', 
+            background: 'rgba(255,255,255,0.1)', 
+            top: '-50px', 
+            right: '-50px',
+            zIndex: 1
+          }}></div>
+          <div style={{ 
+            position: 'absolute', 
+            width: '100px', 
+            height: '100px', 
+            borderRadius: '50%', 
+            background: 'rgba(255,255,255,0.1)', 
+            bottom: '-30px', 
+            left: '10%',
+            zIndex: 1
+          }}></div>
         
-        <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '0.5rem', position: 'relative', zIndex: 1 }}>
-          {personalInfo.fullName || 'Tu Nombre'}
-        </h1>
-        <h2 style={{ fontSize: '1.4rem', fontWeight: '300', marginBottom: '1.5rem', position: 'relative', zIndex: 1 }}>
-          {personalInfo.title || 'Tu Título Profesional'}
-        </h2>
+          <h1 style={{ fontSize: '2.5rem', fontWeight: '800', marginBottom: '0.5rem', position: 'relative', zIndex: 2 }}>
+            {personalInfo.fullName || 'Tu Nombre'}
+          </h1>
+          <h2 style={{ fontSize: '1.4rem', fontWeight: '300', marginBottom: '1.5rem', position: 'relative', zIndex: 2 }}>
+            {personalInfo.title || 'Tu Título Profesional'}
+          </h2>
         
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', position: 'relative', zIndex: 1 }}>
-          {personalInfo.email && (
-            <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
-              <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '0.5rem' }} />
-              <span>{personalInfo.email}</span>
-            </div>
-          )}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', position: 'relative', zIndex: 2 }}>
+            {personalInfo.email && (
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
+                <FontAwesomeIcon icon={faEnvelope} style={{ marginRight: '0.5rem' }} />
+                <span>{personalInfo.email}</span>
+              </div>
+            )}
+            
+            {personalInfo.phone && (
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
+                <FontAwesomeIcon icon={faPhone} style={{ marginRight: '0.5rem' }} />
+                <span>{personalInfo.phone}</span>
+              </div>
+            )}
+            
+            {personalInfo.location && (
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
+                <FontAwesomeIcon icon={faMapMarkerAlt} style={{ marginRight: '0.5rem' }} />
+                <span>{personalInfo.location}</span>
+              </div>
+            )}
+          </div>
           
-          {personalInfo.phone && (
-            <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
-              <FontAwesomeIcon icon={faPhone} style={{ marginRight: '0.5rem' }} />
-              <span>{personalInfo.phone}</span>
-            </div>
-          )}
-          
-          {personalInfo.location && (
-            <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
-              <FontAwesomeIcon icon={faMapMarkerAlt} style={{ marginRight: '0.5rem' }} />
-              <span>{personalInfo.location}</span>
-            </div>
-          )}
-        </div>
-        
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem', position: 'relative', zIndex: 1 }}>
-          {personalInfo.portfolio && (
-            <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
-              <FontAwesomeIcon icon={faGlobe} style={{ marginRight: '0.5rem' }} />
-              <span>{personalInfo.portfolio}</span>
-            </div>
-          )}
-          
-          {personalInfo.linkedIn && (
-            <div style={{ display: 'flex', alignItems: 'center' }}>
-              <FontAwesomeIcon icon={faLink} style={{ marginRight: '0.5rem' }} />
-              <span>{personalInfo.linkedIn}</span>
-            </div>
-          )}
+          <div style={{ display: 'flex', flexWrap: 'wrap', gap: '1rem', marginTop: '0.5rem', position: 'relative', zIndex: 2 }}>
+            {personalInfo.portfolio && (
+              <div style={{ display: 'flex', alignItems: 'center', marginRight: '1rem' }}>
+                <FontAwesomeIcon icon={faGlobe} style={{ marginRight: '0.5rem' }} />
+                <span>{personalInfo.portfolio}</span>
+              </div>
+            )}
+            
+            {personalInfo.linkedIn && (
+              <div style={{ display: 'flex', alignItems: 'center' }}>
+                <FontAwesomeIcon icon={faLink} style={{ marginRight: '0.5rem' }} />
+                <span>{personalInfo.linkedIn}</span>
+              </div>
+            )}
+          </div>
         </div>
       </header>
 
@@ -136,7 +167,7 @@ const CreativeTemplate = ({ resumeData }) => {
         }}>
           <h3 style={{ 
             fontSize: '1.3rem', 
-            color: '#3a0ca3', 
+            color: colorTheme.accent, 
             marginBottom: '1rem',
             position: 'relative',
             paddingBottom: '0.5rem'
@@ -148,7 +179,7 @@ const CreativeTemplate = ({ resumeData }) => {
               left: '0', 
               width: '50px', 
               height: '3px', 
-              background: 'linear-gradient(to right, #4cc9f0, #4361ee)', 
+              background: `linear-gradient(to right, ${colorTheme.primary}, ${colorTheme.secondary})`, 
               borderRadius: '10px' 
             }}></span>
           </h3>
@@ -173,7 +204,7 @@ const CreativeTemplate = ({ resumeData }) => {
             }}>
               <h3 style={{ 
                 fontSize: '1.3rem', 
-                color: '#3a0ca3', 
+                color: colorTheme.accent, 
                 marginBottom: '1.5rem',
                 position: 'relative',
                 paddingBottom: '0.5rem'
@@ -185,7 +216,7 @@ const CreativeTemplate = ({ resumeData }) => {
                   left: '0', 
                   width: '50px', 
                   height: '3px', 
-                  background: 'linear-gradient(to right, #4cc9f0, #4361ee)', 
+                  background: `linear-gradient(to right, ${colorTheme.primary}, ${colorTheme.secondary})`, 
                   borderRadius: '10px' 
                 }}></span>
               </h3>
@@ -253,7 +284,7 @@ const CreativeTemplate = ({ resumeData }) => {
             }}>
               <h3 style={{ 
                 fontSize: '1.3rem', 
-                color: '#3a0ca3', 
+                color: colorTheme.accent, 
                 marginBottom: '1.5rem',
                 position: 'relative',
                 paddingBottom: '0.5rem'
@@ -265,7 +296,7 @@ const CreativeTemplate = ({ resumeData }) => {
                   left: '0', 
                   width: '50px', 
                   height: '3px', 
-                  background: 'linear-gradient(to right, #4cc9f0, #4361ee)', 
+                  background: `linear-gradient(to right, ${colorTheme.primary}, ${colorTheme.secondary})`, 
                   borderRadius: '10px' 
                 }}></span>
               </h3>
@@ -338,7 +369,7 @@ const CreativeTemplate = ({ resumeData }) => {
             }}>
               <h3 style={{ 
                 fontSize: '1.3rem', 
-                color: '#3a0ca3', 
+                color: colorTheme.accent, 
                 marginBottom: '1.5rem',
                 position: 'relative',
                 paddingBottom: '0.5rem'
@@ -350,7 +381,7 @@ const CreativeTemplate = ({ resumeData }) => {
                   left: '0', 
                   width: '50px', 
                   height: '3px', 
-                  background: 'linear-gradient(to right, #4cc9f0, #4361ee)', 
+                  background: `linear-gradient(to right, ${colorTheme.primary}, ${colorTheme.secondary})`, 
                   borderRadius: '10px' 
                 }}></span>
               </h3>
@@ -396,7 +427,7 @@ const CreativeTemplate = ({ resumeData }) => {
             }}>
               <h3 style={{ 
                 fontSize: '1.3rem', 
-                color: '#3a0ca3', 
+                color: colorTheme.accent, 
                 marginBottom: '1.5rem',
                 position: 'relative',
                 paddingBottom: '0.5rem'
@@ -408,7 +439,7 @@ const CreativeTemplate = ({ resumeData }) => {
                   left: '0', 
                   width: '50px', 
                   height: '3px', 
-                  background: 'linear-gradient(to right, #4cc9f0, #4361ee)', 
+                  background: `linear-gradient(to right, ${colorTheme.primary}, ${colorTheme.secondary})`, 
                   borderRadius: '10px' 
                 }}></span>
               </h3>
@@ -448,7 +479,7 @@ const CreativeTemplate = ({ resumeData }) => {
             }}>
               <h3 style={{ 
                 fontSize: '1.3rem', 
-                color: '#3a0ca3', 
+                color: colorTheme.accent, 
                 marginBottom: '1.5rem',
                 position: 'relative',
                 paddingBottom: '0.5rem'
@@ -460,7 +491,7 @@ const CreativeTemplate = ({ resumeData }) => {
                   left: '0', 
                   width: '50px', 
                   height: '3px', 
-                  background: 'linear-gradient(to right, #4cc9f0, #4361ee)', 
+                  background: `linear-gradient(to right, ${colorTheme.primary}, ${colorTheme.secondary})`, 
                   borderRadius: '10px' 
                 }}></span>
               </h3>

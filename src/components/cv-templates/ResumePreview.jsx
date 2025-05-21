@@ -1,28 +1,24 @@
-import { forwardRef } from 'react'
+import React, { forwardRef } from 'react'
 import ModernTemplate from './ModernTemplate'
 import ProfessionalTemplate from './ProfessionalTemplate'
 import CreativeTemplate from './CreativeTemplate'
 import ExecutiveTemplate from './ExecutiveTemplate'
+import PremiumTemplate from './PremiumTemplate'
 
 const ResumePreview = forwardRef(({ resumeData, template, colorTheme }, ref) => {
-  const renderTemplate = () => {
-    switch (template) {
-      case 'modern':
-        return <ModernTemplate resumeData={resumeData} colorTheme={colorTheme} />
-      case 'professional':
-        return <ProfessionalTemplate resumeData={resumeData} colorTheme={colorTheme} />
-      case 'creative':
-        return <CreativeTemplate resumeData={resumeData} colorTheme={colorTheme} />
-      case 'executive':
-        return <ExecutiveTemplate resumeData={resumeData} colorTheme={colorTheme} />
-      default:
-        return <ModernTemplate resumeData={resumeData} colorTheme={colorTheme} />
-    }
+  const templates = {
+    modern: ModernTemplate,
+    professional: ProfessionalTemplate,
+    creative: CreativeTemplate,
+    executive: ExecutiveTemplate,
+    premium: PremiumTemplate
   }
+
+  const SelectedTemplate = templates[template] || ModernTemplate
 
   return (
     <div ref={ref} className="resume-preview-container" style={{ width: '100%', maxWidth: '800px', margin: '0 auto', padding: '1.5rem' }}>
-      {renderTemplate()}
+      <SelectedTemplate resumeData={resumeData} colorTheme={colorTheme} />
     </div>
   )
 })

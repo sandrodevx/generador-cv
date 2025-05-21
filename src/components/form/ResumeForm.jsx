@@ -1,8 +1,9 @@
 import { useState } from 'react'
 import { Row, Col, Form, Card, Tab, Nav, Button, Image, Alert } from 'react-bootstrap'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser, faBriefcase, faGraduationCap, faTools, faLanguage, faCertificate, faPalette, faCamera, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faUser, faBriefcase, faGraduationCap, faTools, faLanguage, faCertificate, faPalette, faCamera, faTrashAlt, faSliders } from '@fortawesome/free-solid-svg-icons'
 import TemplateSelector from './TemplateSelector'
+import AdvancedCustomization from './AdvancedCustomization'
 
 // Obtener el tamaño máximo de archivo desde variables de entorno
 const MAX_UPLOAD_SIZE = parseInt(import.meta.env.VITE_MAX_UPLOAD_SIZE || '1048576')
@@ -10,6 +11,12 @@ const MAX_UPLOAD_SIZE = parseInt(import.meta.env.VITE_MAX_UPLOAD_SIZE || '104857
 const ResumeForm = ({ resumeData, onUpdate, activeTemplate, setActiveTemplate, colorTheme, onColorChange }) => {
   const [key, setKey] = useState('personal')
   const [imageError, setImageError] = useState('')
+  const [customization, setCustomization] = useState({
+    mainFont: 'Roboto',
+    headingFont: 'Montserrat',
+    sectionSpacing: 2.5,
+    headingWeight: '600'
+  })
 
   const handleInputChange = (section, field, value) => {
     const newData = { ...resumeData }
@@ -66,6 +73,15 @@ const ResumeForm = ({ resumeData, onUpdate, activeTemplate, setActiveTemplate, c
     onUpdate(newData);
   };
 
+  const handleCustomizationChange = (newCustomization) => {
+    setCustomization(newCustomization);
+    // Apply customization changes to the document
+    document.documentElement.style.setProperty('--main-font', newCustomization.mainFont);
+    document.documentElement.style.setProperty('--heading-font', newCustomization.headingFont);
+    document.documentElement.style.setProperty('--section-spacing', `${newCustomization.sectionSpacing}rem`);
+    document.documentElement.style.setProperty('--heading-weight', newCustomization.headingWeight);
+  };
+
   return (
     <Card className="shadow-sm form-section">
       <Card.Body>
@@ -113,6 +129,12 @@ const ResumeForm = ({ resumeData, onUpdate, activeTemplate, setActiveTemplate, c
                   <Nav.Link eventKey="templates">
                     <FontAwesomeIcon icon={faPalette} className="me-2" />
                     Plantillas
+                  </Nav.Link>
+                </Nav.Item>
+                <Nav.Item>
+                  <Nav.Link eventKey="advanced">
+                    <FontAwesomeIcon icon={faSliders} className="me-2" />
+                    Personalización Avanzada
                   </Nav.Link>
                 </Nav.Item>
               </Nav>
@@ -580,12 +602,21 @@ const ResumeForm = ({ resumeData, onUpdate, activeTemplate, setActiveTemplate, c
                 </Tab.Pane>
 
                 <Tab.Pane eventKey="templates">
-                  <h4 className="section-header">Selecciona una Plantilla</h4>
-                  <TemplateSelector 
-                    activeTemplate={activeTemplate} 
+                  <h4 className="section-header">Seleccionar Plantilla</h4>
+                  <TemplateSelector
+                    activeTemplate={activeTemplate}
                     setActiveTemplate={setActiveTemplate}
                     colorTheme={colorTheme}
                     onColorChange={onColorChange}
+                    customization={customization}
+                    onCustomizationChange={handleCustomizationChange}
+                  />
+                </Tab.Pane>
+                <Tab.Pane eventKey="advanced">
+                  <h4 className="section-header">Personalización Avanzada</h4>
+                  <AdvancedCustomization
+                    customization={customization}
+                    onUpdate={handleCustomizationChange}
                   />
                 </Tab.Pane>
               </Tab.Content>
