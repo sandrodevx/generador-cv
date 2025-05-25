@@ -63,7 +63,7 @@ Aplicación web avanzada para crear currículums profesionales e impresionantes 
 
 ### 1. Clonar el Repositorio
 ```bash
-git clone https://github.com/sandrodevx/generador-cv.git
+git clone https://github.com/sandrogomez-dev/generador-cv.git
 cd generador-cv
 ```
 
