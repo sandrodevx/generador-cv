@@ -192,6 +192,6 @@ Este proyecto está bajo la Licencia MIT. Ver `LICENSE` para más detalles.
 ⭐ **¡Dale una estrella en GitHub!**  
 🐛 **¿Encontraste un bug?** Abre un issue  
 💡 **¿Tienes una idea?** ¡Compártela!  
-📧 **Contacto**: [tu-email@ejemplo.com]
+📧 **Contacto**: [sandrodevx@gmail.com]
 
 **Hecho con ❤️ para ayudarte a conseguir el trabajo de tus sueños** 🚀
